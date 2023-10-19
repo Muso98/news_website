@@ -1,5 +1,6 @@
 {% extends "news/base.html" %}
 {% load static %}
+{% load hitcount_tags %}
 {% block title %} Mahalliy yangiliklar {% endblock title %}
 {% block content %}
     <section id="contentSection">
@@ -14,7 +15,10 @@
                       {% if forloop.first %}
                 <li>
                   <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ mahalliy.get_absolute_url }}"> <img src="{{ mahalliy.image.url }}" alt=""> <span class="overlay"></span> </a>
-                    <figcaption> <a href="{{ mahalliy.get_absolute_url }}">{{ mahalliy.title }}</a> </figcaption>
+                    <figcaption> <a href="{{ mahalliy.get_absolute_url }}">{{ mahalliy.title }}</a>
+                        <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for mahalliy %}</p>
+
+                    </figcaption>
                     <p>{{ mahalliy.body | truncatewords:30 }}</p>
                   </figure>
                 </li>
@@ -28,7 +32,10 @@
                        {% if forloop.counter > 1 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="{{ mahalliy.get_absolute_url }}" class="media-left"> <img alt="" src="{{ mahalliy.image.url }}"> </a>
-                    <div class="media-body"> <a href="{{ mahalliy.get_absolute_url }}" class="catg_title"> {{ mahalliy.title }} </a> </div>
+                    <div class="media-body"> <a href="{{ mahalliy.get_absolute_url }}" class="catg_title"> {{ mahalliy.title }} </a>
+                        <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for mahalliy %}</p>
+
+                    </div>
                   </div>
                 </li>
                       {% endif %}
@@ -46,7 +53,10 @@
                 {% for tavsiya in tavsiya_mahalliy %}
               <li>
                 <div class="media wow fadeInDown"> <a href="{{ tavsiya.get_absolute_url }}" class="media-left"> <img alt="" src="{{ tavsiya.image.url }}"> </a>
-                  <div class="media-body"> <a href="{{ tavsiya.get_absolute_url }}" class="catg_title"> {{ tavsiya.title }}</a> </div>
+                  <div class="media-body"> <a href="{{ tavsiya.get_absolute_url }}" class="catg_title"> {{ tavsiya.title }}</a>
+                      <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for tavsiya %}</p>
+
+                  </div>
                 </div>
               </li>
                {% endfor %}

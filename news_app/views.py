@@ -1,9 +1,20 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DetailView
+from hitcount.utils import get_hitcount_model
+#from hitcount.models import HitCountMixin
+#from hitcount.utils import get_hitcount_model
+from hitcount.views import HitCountDetailView,HitCountMixin
 
+from news_project.custom_permissions import OnlyLoggedSuperUser
 from .models import News, Category
-from .forms import ContactForm
+from .forms import ContactForm, CommentForm
+
 
 def news_list(request):
     #news_list = News.objects.filter(status=News.Status.Published)
@@ -15,8 +26,37 @@ def news_list(request):
 
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.Published)
+    context ={}
+    #hitcount logic
+    hit_count = get_hitcount_model().objects.get_for_object(news)
+    hits = hit_count.hits
+    hitcontext = context['hitcount'] = {'pk':hit_count.pk}
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    if hit_count_response.hit_counted:
+        hits = hits +1
+        hitcontext['hit_counted'] = hit_count_response.hit_counted
+        hitcontext['hit_message'] = hit_count_response.hit_message
+        hitcontext['total_hits'] = hits
+    comments = news.comments.filter(active=True)
+    comment_count = comments.count()
+    new_comment = None
+    if request.method == "POST":
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            news_comment = comment_form.save(commit=False)
+            news_comment.news=news
+            news_comment.user = request.user
+            news_comment.save()
+            comment_form = CommentForm()
+    else:
+        comment_form = CommentForm()
     context = {
-        "news":news
+        "news":news,
+        "comments":comments,
+        "comment_count":comment_count,
+        "new_comment":new_comment,
+        "comment_form":comment_form
+
     }
     return render(request, "news/news_detail.html", context)
 
@@ -64,7 +104,7 @@ class HomePageView(ListView):
 #     return render(request, "news/contact.html", context)
 
 
-class ContactPageView(TemplateView):
+class ContactPageView(LoginRequiredMixin, TemplateView):
     template_name = "news/contact.html"
 
     def get(self, request, *args, **kwargs):
@@ -154,3 +194,47 @@ class SportNewsView(ListView):
         context['tavsiya_sport'] = News.published.all().filter(category__name="Sport").order_by("-publish_time")
 
         return context
+
+
+class NewsUpdateView(OnlyLoggedSuperUser, UpdateView):
+    model = News
+    fields = ('title', 'body', 'image', 'category', 'status')
+    template_name = 'crud/news_edit.html'
+
+
+class NewsDeleteView(OnlyLoggedSuperUser, UpdateView):
+    model = News
+    template_name = 'crud/news_delete.html'
+    success_url = reverse_lazy('home_page')
+    fields = '__all__'
+
+class NewsCreateView(OnlyLoggedSuperUser, CreateView):
+    model = News
+    template_name = 'crud/news_create.html'
+    fields = ('title', 'slug', 'body', 'image', 'category', 'status' )
+
+@login_required
+@user_passes_test(lambda u:u.is_superuser)
+def adminpageview(request):
+    super_users = User.objects.filter(is_superuser = True)
+    context = {
+        'super_users':super_users
+    }
+    return render(request, "pages/admin_page.html", context)
+
+
+class SearchResultList(ListView):
+    model = News
+    template_name = "news/search_result.html"
+    context_object_name = "barcha_yangiliklar"
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        queryset = super().get_queryset()
+        # return News.objects.filter(
+        #     Q(title__icontains=query)  | Q(body__icontains=query)
+        # )
+        if query:
+            queryset = queryset.filter(Q(title__icontains=query) | Q(body__icontains=query))
+        return queryset
+

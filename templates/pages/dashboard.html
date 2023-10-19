@@ -1,0 +1,28 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+     <div class="contact_area">
+         <a class="btn btn-danger" href="{% url 'logout' %}" role="button">Log out</a>
+
+        <h3>Xush kelibsiz {{ user.username }}</h3>
+            <h2>Siz haqingizda ma'lumotlar</h2>
+            <form action="#" class="contact_form" method="post">
+                <img src="{{ profile.photo.url }}" width="30%"><br>
+                <h4>Tug'ilgan sanasi: {{ profile.date_of_birth }}</h4>
+              <label>Username:</label><input class="form-control" type="text" value="{{ user.username }}" placeholder="Name*" name="name" readonly>
+              <label>Email:</label><input class="form-control" type="email" value="{{ user.email }}" placeholder="Email*" name="email" readonly>
+                <label>Ismingiz:</label><input class="form-control" type="text" value="{{ user.first_name }}" placeholder="Ismingiz*" name="name" readonly>
+              <label>Familiyangiz:</label><input class="form-control" type="text" value="{{ user.last_name }}" placeholder="Familiyangiz*" name="name" readonly>
+                <a class="btn btn-primary" href="{% url 'password_change' %}" role="button">parolni almashtirish</a>
+                <a class="btn btn-success" href="{% url 'edit_user_information' %}" role="button">profilni tahrirlash</a>
+
+            </form>
+
+          </div>
+{% endblock %}
