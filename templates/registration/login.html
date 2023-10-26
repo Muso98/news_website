@@ -1,11 +1,12 @@
 {% extends 'news/base.html' %}
 {% load static %}
-{% block title %}Login sahifasi{% endblock  %}
+{% load i18n %}
+{% block title %}{% blocktrans %}Login sahifasi{% endblocktrans %}{% endblock  %}
 
 {% block content %}
-	<h2>Web saytga kirish - login</h2>
-    <p>Iltimos saytga kirish uchun quyidagi formani to'ldiring</p>
-    <h5>Agar parolingizni unutgan bolsangiz, uni <a href="{% url 'password_reset' %}">tiklang</a> </h5>
+	<h2>{% blocktrans %}Web saytga kirish - login{% endblocktrans %}</h2>
+    <p>{% blocktrans %}Iltimos saytga kirish uchun quyidagi formani to'ldiring{% endblocktrans %}</p>
+    <h5>{% blocktrans %}Agar parolingizni unutgan bolsangiz, uni{% endblocktrans %} <a href="{% url 'password_reset' %}">{% blocktrans %}tiklang{% endblocktrans %}</a> </h5>
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
     <button type="submit">Login</button>

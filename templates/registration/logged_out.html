@@ -1,10 +1,11 @@
 {% extends 'news/base.html' %}
 {% load static %}
-{% block title %}Logout sahifasi{% endblock  %}
+{% load i18n %}
+{% block title %}{% blocktrans %}Logout sahifasi{% endblocktrans %}{% endblock  %}
 
 {% block content %}
-	<h2>Web saytdan chiqish </h2>
-    <p>Siz web saytdan chiqdingiz <a href="{% url 'login' %}"  class="btn btn-primary" role="button">Login</a> </p>
+	<h2>{% blocktrans %}Web saytdan chiqish {% endblocktrans %}</h2>
+    <p>{% blocktrans %}Siz web saytdan chiqdingiz{% endblocktrans %} <a href="{% url 'login' %}"  class="btn btn-primary" role="button">Login</a> </p>
 
 
     </form>

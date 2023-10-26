@@ -1,14 +1,15 @@
 {% extends "news/base.html" %}
 {% load static %}
+{% load i18n %}
 {% load hitcount_tags %}
-{% block title %} Mahalliy yangiliklar {% endblock title %}
+{% block title %}{% blocktrans %} Mahalliy yangiliklar {% endblocktrans %}{% endblock title %}
 {% block content %}
     <section id="contentSection">
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_post_content">
-            <h2><span>Mahalliy yangiliklar</span></h2>
+            <h2><span>{% blocktrans %}Mahalliy yangiliklar{% endblocktrans %}</span></h2>
             <div class="single_post_content_left">
               <ul class="business_catgnav">
                   {% for mahalliy in mahalliy_yangiliklar %}
@@ -16,7 +17,7 @@
                 <li>
                   <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ mahalliy.get_absolute_url }}"> <img src="{{ mahalliy.image.url }}" alt=""> <span class="overlay"></span> </a>
                     <figcaption> <a href="{{ mahalliy.get_absolute_url }}">{{ mahalliy.title }}</a>
-                        <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for mahalliy %}</p>
+                        <p>{% blocktrans %}Ko'rilganlar soni{% endblocktrans %}: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for mahalliy %}</p>
 
                     </figcaption>
                     <p>{{ mahalliy.body | truncatewords:30 }}</p>
@@ -48,13 +49,13 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Tavsiya etamiz</span></h2>
+            <h2><span>{% blocktrans %}Tavsiya etamiz{% endblocktrans %}</span></h2>
             <ul class="spost_nav">
                 {% for tavsiya in tavsiya_mahalliy %}
               <li>
                 <div class="media wow fadeInDown"> <a href="{{ tavsiya.get_absolute_url }}" class="media-left"> <img alt="" src="{{ tavsiya.image.url }}"> </a>
                   <div class="media-body"> <a href="{{ tavsiya.get_absolute_url }}" class="catg_title"> {{ tavsiya.title }}</a>
-                      <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for tavsiya %}</p>
+                      <p>{% blocktrans %}Ko'rilganlar soni{% endblocktrans %}: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for tavsiya %}</p>
 
                   </div>
                 </div>

@@ -1,10 +1,11 @@
 {% extends 'news/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-	Muvaffaqiyatli ro'yhatdan o'dingiz
+	{% blocktrans %}Muvaffaqiyatli ro'yhatdan o'dingiz{% endblocktrans %}
 {% endblock %}
 {% block content %}
-	<h1>{{ new_user.first_name }}, tabriklaymiz ro'yhatdan o'tdingiz </h1>
-    <p>Muvaffaqiyatli ro'yhatdan o'tdingiz!</p>
-    <p>Endi saytga <a href="{% url 'login' %}">login </a>qilishingiz mumkin </p>
+	<h1>{{ new_user.first_name }}, {% blocktrans %}tabriklaymiz ro'yhatdan o'tdingiz{% endblocktrans %} </h1>
+    <p>{% blocktrans %}Muvaffaqiyatli ro'yhatdan o'tdingiz{% endblocktrans %}!</p>
+    <p>{% blocktrans %}Endi saytga{% endblocktrans %} <a href="{% url 'login' %}">{% blocktrans %}login {% endblocktrans %}</a>{% blocktrans %}qilishingiz mumkin {% endblocktrans %}</p>
 {% endblock %}

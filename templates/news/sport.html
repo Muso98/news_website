@@ -1,8 +1,8 @@
 {% extends "news/base.html" %}
-
+{% load i18n %}
 {% load static %}
 {% load hitcount_tags %}
-{% block title %} Sport yangiliklari {% endblock title %}
+{% block title %}{% blocktrans %} Sport yangiliklari {% endblocktrans %}{% endblock title %}
 
 {% block content %}
       <section id="contentSection">
@@ -10,7 +10,7 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_post_content">
-            <h2><span>Sport yangiliklar</span></h2>
+            <h2><span>{% blocktrans %}Sport yangiliklar{% endblocktrans %}</span></h2>
             <div class="single_post_content_left">
               <ul class="business_catgnav">
                   {% for sport in sport_yangiliklar %}
@@ -18,7 +18,7 @@
                 <li>
                   <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ sport.get_absolute_url }}"> <img src="{{ sport.image.url }}" alt=""> <span class="overlay"></span> </a>
                     <figcaption> <a href="{{ sport.get_absolute_url }}">{{ sport.title }}</a>
-                        <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for sport %}</p>
+                        <p>{% blocktrans %}Ko'rilganlar soni{% endblocktrans %}: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for sport %}</p>
 
                     </figcaption>
                     <p>{{ sport.body | truncatewords:30 }}</p>
@@ -35,7 +35,7 @@
                 <li>
                   <div class="media wow fadeInDown"> <a href="{{ sport.get_absolute_url }}" class="media-left"> <img alt="" src="{{ sport.image.url }}"> </a>
                     <div class="media-body"> <a href="{{ sport.get_absolute_url }}" class="catg_title"> {{ sport.title }} </a>
-                                            <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for sport %}</p>
+                                            <p>{% blocktrans %}Ko'rilganlar soni{% endblocktrans %}: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for sport %}</p>
 
                     </div>
                   </div>
@@ -50,13 +50,13 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Tavsiya etamiz</span></h2>
+            <h2><span>{% blocktrans %}Tavsiya etamiz{% endblocktrans %}</span></h2>
             <ul class="spost_nav">
                 {% for tavsiya in tavsiya_sport %}
               <li>
                 <div class="media wow fadeInDown"> <a href="{{ tavsiya.get_absolute_url }}" class="media-left"> <img alt="" src="{{ tavsiya.image.url }}"> </a>
                   <div class="media-body"> <a href="{{ tavsiya.get_absolute_url }}" class="catg_title">{{ tavsiya.title }}</a>
-                                          <p>Ko'rilganlar soni: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for tavsiya %}</p>
+                                          <p>{% blocktrans %}Ko'rilganlar soni{% endblocktrans %}: <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for tavsiya %}</p>
 
                   </div>
                 </div>

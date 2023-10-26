@@ -1,16 +1,17 @@
 {% extends 'news/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-	foydalanuvchilarni ro'yhatdan o'tkazish
+	{% blocktrans %}Foydalanuvchilarni ro'yhatdan o'tkazish{% endblocktrans %}
 {% endblock %}
 {% block content %}
-	<h1>Yangi foydalanuvchini ro'yhatdan o'tkazish</h1>
-    <p>Ro'yhatdan o'tish uchun quyidagi formani to'ldiring:</p>
+	<h1>{% blocktrans %}Yangi foydalanuvchini ro'yhatdan o'tkazish{% endblocktrans %}</h1>
+    <p>{% blocktrans %}Ro'yhatdan o'tish uchun quyidagi formani to'ldiring{% endblocktrans %}:</p>
 
     <form method="post">
     {% csrf_token %}
     {{ user_form.as_p }}
 {#        {{ form.as_p }}#}
-    <button type="submit" >Ro'yhatdan o'tish </button>
+    <button type="submit" >{% blocktrans %}Ro'yhatdan o'tish {% endblocktrans %}</button>
     </form>
 {% endblock %}

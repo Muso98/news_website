@@ -1,16 +1,17 @@
 {% extends 'news/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-	Admin sahifasi
+	{% blocktrans %}Admin sahifasi{% endblocktrans %}
 {% endblock %}
 {% block content %}
-	<h1>Admin sahifasi</h1>
-    <h3>Barcha adminlar</h3>
+	<h1>{% blocktrans %}Admin sahifasi{% endblocktrans %}</h1>
+    <h3>{% blocktrans %}Barcha adminlar{% endblocktrans %}</h3>
     <table class="table table-bordered table-responsive table-striped">
     <tr>
-        <th>Username</th>
-        <th>Ism</th>
-        <th>Familiya</th>
+        <th>{% blocktrans %}Username{% endblocktrans %}</th>
+        <th>{% blocktrans %}Ism{% endblocktrans %}</th>
+        <th>{% blocktrans %}Familiya{% endblocktrans %}</th>
 
     </tr>
     {% for user in super_users %}
@@ -23,7 +24,7 @@
     </table>
     <h2>|
         <a href="{% url 'news_create' %}" class="text-primary">
-            Yangilik qo'shish
+            {% blocktrans %}Yangilik qo'shish{% endblocktrans %}
         </a>
     |</h2>
 {% endblock %}
